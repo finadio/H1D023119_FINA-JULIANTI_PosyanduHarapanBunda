@@ -1,4 +1,6 @@
 {
+    "name": "posyandu-harapan-bunda",
+    "version": "2.0.0",
     "private": true,
     "type": "module",
     "scripts": {

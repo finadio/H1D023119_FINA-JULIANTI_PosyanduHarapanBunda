@@ -1,11 +1,12 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
-    "name": "laravel/laravel",
+    "name": "finadio/posyandu-harapan-bunda",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Sistem Informasi Posyandu Harapan Bunda",
     "keywords": [
+        "posyandu",
         "laravel",
-        "framework"
+        "healthcare"
     ],
     "license": "MIT",
     "require": {
