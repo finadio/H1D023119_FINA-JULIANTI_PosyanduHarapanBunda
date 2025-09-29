@@ -12,113 +12,130 @@
 @endpush
 
 @section('main')
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                <h1>@yield('title')</h1>
-                <div class="section-header-breadcrumb">
-                    <div class="breadcrumb-item active"><a href="{{ url('/dashboard') }}">Dashboard</a></div>
-                    <div class="breadcrumb-item">@yield('title')</div>
-                </div>
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>@yield('title')</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="{{ url('/dashboard') }}">Dashboard</a></div>
+                <div class="breadcrumb-item">@yield('title')</div>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class=" d-flex justify-content-between align-items-center mb-4" style="gap: .5rem">
-                                <div class="btn-group" role="group">
-                                    <a href="{{ route('schedule.index') }}"
-                                        class="btn {{ $filter == 'all' ? 'btn-primary' : 'btn-outline-primary' }}">Semua</a>
-                                    <a href="{{ route('schedule.index', ['filter' => 'weekly']) }}"
-                                        class="btn {{ $filter == 'weekly' ? 'btn-primary' : 'btn-outline-primary' }}">Minggu
-                                        ini</a>
-                                    <a href="{{ route('schedule.index', ['filter' => 'monthly']) }}"
-                                        class="btn {{ $filter == 'monthly' ? 'btn-primary' : 'btn-outline-primary' }}">Bulan
-                                        ini</a>
-                                </div>
+        </div>
 
-                                @php
-                                    $canAccessContent =
-                                        Auth::user()->officer_id !== null &&
-                                        !in_array(Auth::user()->officers->position, ['Lurah', 'Kepala Lingkungan']) &&
-                                        Auth::user()->role !== 'family_parent';
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
 
-                                    $offset = \Carbon\Carbon::now()->getOffset() / 3600;
-                                    $zone = match ($offset) {
-                                        7 => 'WIB',
-                                        8 => 'WITA',
-                                        9 => 'WIT',
-                                        default => 'N/A',
-                                    };
-                                @endphp
-
-                                @if ($canAccessContent)
-                                    <a href="{{ url('/schedule/create') }}" class="btn btn-primary ml-auto">Tambah</a>
-                                @endif
+                    <div class="card-body">
+                        {{-- Filter Button --}}
+                        <div class="d-flex justify-content-between align-items-center mb-4" style="gap:.5rem">
+                            <div class="btn-group" role="group">
+                                <a href="{{ route('schedule.index', ['filter' => 'all']) }}"
+                                   class="btn {{ $filter == 'all' ? 'btn-primary' : 'btn-outline-primary' }}">Semua</a>
+                                <a href="{{ route('schedule.index', ['filter' => 'today']) }}"
+                                   class="btn {{ $filter == 'today' ? 'btn-primary' : 'btn-outline-primary' }}">Hari Ini</a>
+                                <a href="{{ route('schedule.index', ['filter' => 'yesterday']) }}"
+                                   class="btn {{ $filter == 'yesterday' ? 'btn-primary' : 'btn-outline-primary' }}">Kemarin</a>
+                                <a href="{{ route('schedule.index', ['filter' => 'tomorrow']) }}"
+                                   class="btn {{ $filter == 'tomorrow' ? 'btn-primary' : 'btn-outline-primary' }}">Besok</a>
+                                <a href="{{ route('schedule.index', ['filter' => 'weekly']) }}"
+                                   class="btn {{ $filter == 'weekly' ? 'btn-primary' : 'btn-outline-primary' }}">Minggu Ini</a>
+                                <a href="{{ route('schedule.index', ['filter' => 'monthly']) }}"
+                                   class="btn {{ $filter == 'monthly' ? 'btn-primary' : 'btn-outline-primary' }}">Bulan Ini</a>
                             </div>
 
-                            <div class="table-responsive">
-                                <table class="table-striped table" id="table-1">
-                                    <thead>
-                                        <tr class="text-center">
-                                            <th>No.</th>
-                                            <th>Tanggal</th>
-                                            <th>Waktu ({{ $zone }})</th>
-                                            <th>Nama Kegiatan</th>
-                                            <th>Lokasi</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($schedules as $schedule)
-                                            <tr>
-                                                <td class="text-right">{{ $loop->iteration }}</td>
-                                                <td>
-                                                    {{ $schedule->event_date ? \Carbon\Carbon::parse($schedule->event_date)->locale('id')->isoFormat('D MMMM YYYY') : 'N/A' }}
-                                                </td>
-                                                <td class="text-center">
-                                                    {{ $schedule->start_time ? \Carbon\Carbon::parse($schedule->start_time)->format('H:i') : 'N/A' }}
-                                                    -
-                                                    {{ $schedule->end_time ? \Carbon\Carbon::parse($schedule->end_time)->format('H:i') : 'N/A' }}
-                                                </td>
-                                                <td>{{ $schedule->title ?? 'N/A' }}</td>
-                                                <td>{{ $schedule->event_location ?? 'N/A' }}</td>
-                                                <td>
-                                                    <div class="d-flex justify-content-center" style="gap: .5rem">
-                                                        <a href="{{ url("/schedule/{$schedule->id}/show") }}"
-                                                            class="btn btn-info" data-toggle="tooltip" title="Detail">
-                                                            <i class="fas fa-info-circle"></i>
+                            @php
+                                $canAccessContent =
+                                    Auth::user()->officer_id !== null &&
+                                    !in_array(Auth::user()->officers->position, ['Lurah', 'Kepala Lingkungan']) &&
+                                    Auth::user()->role !== 'family_parent';
+
+                                $offset = \Carbon\Carbon::now()->getOffset() / 3600;
+                                $zone = match ($offset) {
+                                    7 => 'WIB',
+                                    8 => 'WITA',
+                                    9 => 'WIT',
+                                    default => 'N/A',
+                                };
+                            @endphp
+
+                            @if ($canAccessContent)
+                                <a href="{{ url('/schedule/create') }}" class="btn btn-primary">
+                                    <i class="fas fa-plus"></i> Tambah
+                                </a>
+                            @endif
+                        </div>
+
+                        {{-- Table --}}
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="table-1">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>No.</th>
+                                        <th>Tanggal</th>
+                                        <th>Waktu ({{ $zone }})</th>
+                                        <th>Nama Kegiatan</th>
+                                        <th>Lokasi</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($schedules as $schedule)
+                                        <tr>
+                                            <td class="text-right">{{ $loop->iteration }}</td>
+                                            <td>
+                                                {{ $schedule->event_date
+                                                    ? \Carbon\Carbon::parse($schedule->event_date)->locale('id')->isoFormat('D MMMM YYYY')
+                                                    : 'N/A' }}
+                                            </td>
+                                            <td class="text-center">
+                                                {{ $schedule->start_time ? \Carbon\Carbon::parse($schedule->start_time)->format('H:i') : 'N/A' }}
+                                                -
+                                                {{ $schedule->end_time ? \Carbon\Carbon::parse($schedule->end_time)->format('H:i') : 'N/A' }}
+                                            </td>
+                                            <td>{{ $schedule->title ?? 'N/A' }}</td>
+                                            <td>{{ $schedule->event_location ?? 'N/A' }}</td>
+                                            <td>
+                                                <div class="d-flex justify-content-center" style="gap:.5rem">
+                                                    <a href="{{ url("/schedule/{$schedule->id}/show") }}"
+                                                       class="btn btn-info" data-toggle="tooltip" title="Detail">
+                                                        <i class="fas fa-info-circle"></i>
+                                                    </a>
+                                                    @if ($canAccessContent)
+                                                        <a href="{{ url("/schedule/{$schedule->id}/edit") }}"
+                                                           class="btn btn-primary" data-toggle="tooltip" title="Ubah">
+                                                            <i class="fas fa-pencil-alt"></i>
                                                         </a>
-                                                        @if ($canAccessContent)
-                                                            <a href="{{ url("/schedule/{$schedule->id}/edit") }}"
-                                                                class="btn btn-primary" data-toggle="tooltip"
-                                                                title="Ubah">
-                                                                <i class="fas fa-pencil"></i>
-                                                            </a>
-                                                            <form action="{{ url("/schedule/{$schedule->id}") }}"
-                                                                method="POST" id="delete-form-{{ $schedule->id }}"
-                                                                class="d-inline">
-                                                                @method('delete')
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-danger btn-delete"
+                                                        <form action="{{ url("/schedule/{$schedule->id}") }}"
+                                                              method="POST"
+                                                              id="delete-form-{{ $schedule->id }}"
+                                                              class="d-inline">
+                                                            @method('delete')
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger btn-delete"
                                                                     data-toggle="tooltip" title="Hapus">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </button>
-                                                            </form>
-                                                        @endif
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                                                                <i class="fas fa-trash"></i>
+                                                            </button>
+                                                        </form>
+                                                    @endif
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center text-muted">Tidak ada jadwal</td>
+                                        </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </section>
+</div>
 @endsection
 
 @push('scripts')
@@ -128,10 +145,8 @@
     @if ($canAccessContent)
         <script>
             $(document).ready(function() {
-                // Gunakan delegasi untuk tombol hapus
                 $(document).on('click', '.btn-delete', function(e) {
                     e.preventDefault();
-
                     const formId = $(this).closest('form').attr('id');
 
                     swal({

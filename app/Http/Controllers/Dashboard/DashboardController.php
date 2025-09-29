@@ -78,11 +78,13 @@ class DashboardController extends Controller
     {
         $cacheKey = $this->getTodayScheduleCacheKey();
 
-        $todaySchedules = Cache::remember($cacheKey, now()->addMinutes(10), function () {
-            return EventSchedule::whereDate('event_date', Carbon::today())
-                ->orderBy('start_time', 'asc')
-                ->get();
-        });
+            $todaySchedules = Cache::remember($cacheKey, now()->addMinutes(10), function () {
+        return EventSchedule::whereDate('event_date', '>=', Carbon::today())
+            ->orderBy('event_date', 'asc')
+            ->orderBy('start_time', 'asc')
+            ->limit(5) // misal ambil 5 jadwal terdekat
+            ->get();
+    });
 
         return ['todaySchedules' => $todaySchedules];
     }

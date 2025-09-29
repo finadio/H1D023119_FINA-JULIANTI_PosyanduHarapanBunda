@@ -51,46 +51,39 @@ class EventScheduleController extends Controller
     }
 
     public function index(Request $request)
-    {
-        $filter = $request->query('filter', 'all'); // default: all
-        $now = now();
+{
+    $filter = $request->query('filter', 'all'); // default: all
+    $now = now();
 
-        // Generate cache key sesuai filter
-        $cacheKey = match ($filter) {
-            'weekly' => 'schedules_weekly_' . $now->format('o_W'),
-            'monthly' => 'schedules_monthly_' . $now->format('Y_m'),
-            default => 'schedules_all_' . $now->year,
-        };
+    $schedules = match ($filter) {
+        'today' => EventSchedule::whereDate('event_date', $now->toDateString())
+                    ->orderBy('start_time')
+                    ->get(),
 
-        $schedules = Cache::remember($cacheKey, now()->addMinutes(10), function () use ($filter, $now) {
-            $query = EventSchedule::with(['officers']);
+        'yesterday' => EventSchedule::whereDate('event_date', $now->copy()->subDay()->toDateString())
+                        ->orderBy('start_time')
+                        ->get(),
 
-            switch ($filter) {
-                case 'weekly':
-                    // Gunakan awal minggu Senin dan akhir minggu Minggu
-                    $startOfWeek = $now->copy()->startOfWeek(Carbon::MONDAY);
-                    $endOfWeek = $now->copy()->endOfWeek(Carbon::SUNDAY);
+        'tomorrow' => EventSchedule::whereDate('event_date', $now->copy()->addDay()->toDateString())
+                        ->orderBy('start_time')
+                        ->get(),
 
-                    $query->whereBetween('event_date', [$startOfWeek, $endOfWeek]);
-                    break;
+        'weekly' => EventSchedule::whereBetween('event_date', [
+                        $now->copy()->startOfWeek(Carbon::MONDAY),
+                        $now->copy()->endOfWeek(Carbon::SUNDAY)
+                    ])->orderBy('event_date')->orderBy('start_time')->get(),
 
-                case 'monthly':
-                    $query->whereYear('event_date', $now->year)
-                        ->whereMonth('event_date', $now->month);
-                    break;
+        'monthly' => EventSchedule::whereYear('event_date', $now->year)
+                        ->whereMonth('event_date', $now->month)
+                        ->orderBy('event_date')->orderBy('start_time')->get(),
 
-                default:
-                    $query->whereYear('event_date', $now->year);
-            }
+        default => EventSchedule::whereYear('event_date', $now->year)
+                        ->orderBy('event_date')->orderBy('start_time')->get(),
+    };
 
-            return $query->orderBy('event_date', 'asc')
-                ->orderBy('start_time', 'asc')
-                ->orderBy('end_time', 'asc')
-                ->get();
-        });
+    return view('dashboard.schedule.index', compact('schedules', 'filter'));
+}
 
-        return view('dashboard.schedule.index', compact('schedules', 'filter'));
-    }
 
     public function getScheduleByDay($day)
     {
