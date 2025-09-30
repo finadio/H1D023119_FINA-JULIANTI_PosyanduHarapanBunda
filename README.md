@@ -1,45 +1,77 @@
-﻿# Posyandu Harapan Bunda
+# Sistem Informasi Posyandu Harapan Bunda
 
-Aplikasi manajemen layanan Posyandu (anak, ibu hamil, lansia) berbasis web.
+Selamat datang di repositori Sistem Informasi Posyandu Harapan Bunda! Ini adalah aplikasi berbasis web yang dikembangkan untuk memenuhi tugas mata kuliah **Informatika Medik** di **Universitas Jenderal Soedirman**. Proyek ini bertujuan untuk mendigitalisasi proses pencatatan dan manajemen data di Posyandu Harapan Bunda, Desa Lumbir, yang sebelumnya dilakukan secara manual.
 
-![Versi](https://img.shields.io/badge/version-2.0.0-blue.svg)
-![Tahun](https://img.shields.io/badge/updated-2025-green.svg)
+Aplikasi ini dirancang untuk meningkatkan efisiensi pelayanan, memudahkan penelusuran data pasien (ibu hamil, balita, dan lansia), serta menyediakan media informasi digital bagi masyarakat.
 
-Sistem Informasi Posyandu yang diperbarui untuk tahun 2025 dengan fitur-fitur terkini.
+- **Live Demo:** [**posyanduhb.free.nf**](https://posyanduhb.free.nf/)
+- **Dosen Pengampu:** Dwi Kurnia Wibowo, S.Kom.,M.Kom
 
-## Teknologi
-- Laravel (PHP)
-- MySQL/MariaDB
-- Node.js & Vite (opsional, untuk aset frontend)
+## Pengembang
+
+Proyek ini disusun dan dikembangkan oleh:
+- **Khansa Nur Khalisah** (H1D023106)
+- **Fina Julianti** (H1D023119)
+
+## Fitur Utama
+
+Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyandu secara digital:
+
+#### 1. Manajemen Data (Master)
+- **Data Pasien:** Mengelola data orang tua, anak-anak, dan lansia secara terstruktur.
+- **Data Pengguna:** Mengelola data petugas dan admin yang memiliki akses ke sistem.
+
+#### 2. Manajemen Layanan Kesehatan
+- **Imunisasi:** Pencatatan riwayat imunisasi anak, termasuk jenis vaksin dan efek samping.
+- **Penimbangan:** Pemantauan data pertumbuhan anak (berat badan, tinggi badan, lingkar kepala).
+- **Pemeriksaan Ibu Hamil:** Pencatatan komprehensif hasil pemeriksaan kehamilan.
+- **Pemeriksaan Lansia:** Pencatatan data kesehatan peserta lansia seperti tekanan darah, gula darah, dan status gizi.
+
+#### 3. Manajemen Informasi & Komunikasi
+- **Jadwal Kegiatan:** Mengelola dan menampilkan jadwal semua kegiatan Posyandu.
+- **Artikel Kesehatan:** Media edukasi digital bagi masyarakat yang dapat dikelola oleh admin.
+- **Integrasi WhatsApp:** Terdapat tombol akses cepat ke grup WhatsApp dan pusat bantuan untuk mempermudah komunikasi.
+
+#### 4. Manajemen Inventaris
+- **Persediaan Vaksin:** Mengelola data stok vaksin, termasuk tanggal masuk dan kedaluwarsa.
+- **Persediaan Obat:** Mengelola stok obat-obatan yang tersedia di Posyandu.
+
+#### 5. Pengaturan Sistem
+- **Autentikasi:** Sistem registrasi dan login yang aman untuk pengguna.
+- **Identitas Situs:** Konfigurasi informasi dasar situs seperti nama desa dan kontak resmi.
+
+## Teknologi yang Digunakan
+- **Backend:** Laravel (PHP)
+- **Database:** MySQL / MariaDB
+- **Frontend:** Node.js & Vite (opsional, untuk manajemen aset)
 
 ## Prasyarat
 - PHP 8.x dan Composer
-- MySQL/MariaDB
-- Node.js (opsional)
+- MySQL / MariaDB
+- Node.js (opsional, direkomendasikan untuk pengembangan frontend)
 
-## Instalasi
+## Instalasi (Lokal)
 ```bash
-# 1) Clone repo
-git clone https://github.com/finadio/PosyanduHarapanBunda.git
+# 1. Clone repositori ini
+git clone [https://github.com/finadio/PosyanduHarapanBunda.git](https://github.com/finadio/PosyanduHarapanBunda.git)
 cd PosyanduHarapanBunda
 
-# 2) Salin env dan atur konfigurasi database
+# 2. Salin file .env.example dan atur konfigurasi database
 copy .env.example .env
-# Edit .env -> DB_DATABASE, DB_USERNAME, DB_PASSWORD
+# Edit file .env dan sesuaikan DB_DATABASE, DB_USERNAME, DB_PASSWORD
 
-# 3) Install dependency backend
+# 3. Install dependency backend via Composer
 composer install
 
-# 4) Generate app key
+# 4. Generate application key
 php artisan key:generate
 
-# 5) Migrasi dan seeding (opsional)
+# 5. Jalankan migrasi dan seeding (opsional, untuk data awal)
 php artisan migrate --seed
 
-# 6) (Opsional) Install dependency frontend dan build
+# 6. (Opsional) Install dependency frontend dan build aset
 npm install
 npm run build
-```
 
 ## Menjalankan Aplikasi (Local)
 ```bash
