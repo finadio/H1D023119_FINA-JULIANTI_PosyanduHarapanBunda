@@ -15,6 +15,8 @@ use App\Http\Controllers\Dashboard\PregnancyCheckController;
 use App\Http\Controllers\Dashboard\SiteIdentityController;
 use App\Http\Controllers\Dashboard\VaccineController;
 use App\Http\Controllers\Dashboard\WeighingController;
+use App\Http\Controllers\Dashboard\ArticleController;
+use App\Http\Controllers\UserArticleController;
 use Illuminate\Support\Facades\Route;
 
 // Default
@@ -291,6 +293,18 @@ Route::get('/site-identity', [SiteIdentityController::class, 'index'])
 Route::put('/site-identity', [SiteIdentityController::class, 'update'])
     ->name('site-identity.update')
     ->middleware('role:admin');
+
+// Articles Management - Admin, Village Head, Midwife, Officer
+Route::resource('/article-data', ArticleController::class)->middleware('role:admin,village_head,midwife,officer');
+
+// Articles Display - For All Users
+Route::get('/articles', [UserArticleController::class, 'index'])
+    ->name('articles.index')
+    ->middleware('auth');
+
+Route::get('/articles/{id}', [UserArticleController::class, 'show'])
+    ->name('articles.show')
+    ->middleware('auth');
 
 // AJAX
 Route::get('/schedule/ajax/{day}', [EventScheduleController::class, 'getScheduleByDay'])
