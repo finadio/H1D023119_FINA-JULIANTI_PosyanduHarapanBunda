@@ -34,5 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(WeighingSeeder::class);
         $this->call(PregnancyCheckSeeder::class);
         $this->call(ElderlyCheckSeeder::class);
+        $this->call(ArticleWithImageSeeder::class);
     }
 }
