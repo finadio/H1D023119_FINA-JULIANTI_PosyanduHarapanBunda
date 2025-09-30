@@ -78,6 +78,12 @@
                     <span>Jadwal</span>
                 </a>
             </li>
+            <li class="{{ Request::is('articles*') ? 'active' : '' }}">
+                <a href="{{ route('articles.index') }}" class="nav-link">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Artikel</span>
+                </a>
+            </li>
 
             <li class="menu-header">Layanan</li>
             <li class="{{ Request::is('immunization-data*') ? 'active' : '' }}">
@@ -128,14 +134,23 @@
                 @endif
             @endif
 
-            @if (auth()->check() && auth()->user()->role === 'admin')
+            @if (auth()->check() && auth()->user()->role !== 'family_parent')
                 <li class="menu-header">Pengaturan</li>
-                <li class="{{ Request::is('site-identity*') ? 'active' : '' }}">
-                    <a href="{{ url('/site-identity') }}" class="nav-link">
-                        <i class="fas fa-globe"></i>
-                        <span>Identitas Situs</span>
+                <li class="{{ Request::is('article-data*') ? 'active' : '' }}">
+                    <a href="{{ route('article-data.index') }}" class="nav-link">
+                        <i class="fas fa-edit"></i>
+                        <span>Manajemen Artikel</span>
                     </a>
                 </li>
+                
+                @if (auth()->check() && auth()->user()->role === 'admin')
+                    <li class="{{ Request::is('site-identity*') ? 'active' : '' }}">
+                        <a href="{{ url('/site-identity') }}" class="nav-link">
+                            <i class="fas fa-globe"></i>
+                            <span>Identitas Situs</span>
+                        </a>
+                    </li>
+                @endif
             @endif
         </ul>
 
