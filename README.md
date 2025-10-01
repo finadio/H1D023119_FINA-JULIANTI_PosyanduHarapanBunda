@@ -41,10 +41,10 @@ Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyan
 
 ## Akun Demo
 Untuk mencoba aplikasi, gunakan akun berikut:
-**Admin**
+## **Admin**
 - **Username:** admin
 - **Password:** 123
-**User**
+## **User**
 - **Username:** 5658262510081726
 - **Password:** 123
 
