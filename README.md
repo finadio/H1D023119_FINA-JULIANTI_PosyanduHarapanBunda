@@ -1,4 +1,6 @@
 # Sistem Informasi Posyandu Harapan Bunda
+## Tampilan Dashboard
+![Dashboard](https://github.com/finadio/H1D023119_FINA-JULIANTI_PosyanduHarapanBunda/blob/main/Screenshot%202025-10-01%20193308.png?raw=true)
 
 Selamat datang di repositori Sistem Informasi Posyandu Harapan Bunda! Ini adalah aplikasi berbasis web yang dikembangkan untuk memenuhi tugas mata kuliah **Informatika Medik** di **Universitas Jenderal Soedirman**. Proyek ini bertujuan untuk mendigitalisasi proses pencatatan dan manajemen data di Posyandu Harapan Bunda, Desa Lumbir, yang sebelumnya dilakukan secara manual.
 
@@ -8,13 +10,10 @@ Aplikasi ini dirancang untuk meningkatkan efisiensi pelayanan, memudahkan penelu
 - **Dosen Pengampu:** Dwi Kurnia Wibowo, S.Kom.,M.Kom
 
 ## Pengembang
-
-Proyek ini disusun dan dikembangkan oleh:
-- **Khansa Nur Khalisah** (H1D023106)
-- **Fina Julianti** (H1D023119)
+- **Khansa Nur Khalisah** (H1D023106)  
+- **Fina Julianti** (H1D023119)  
 
 ## Fitur Utama
-
 Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyandu secara digital:
 
 #### 1. Manajemen Data (Master)
@@ -30,7 +29,7 @@ Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyan
 #### 3. Manajemen Informasi & Komunikasi
 - **Jadwal Kegiatan:** Mengelola dan menampilkan jadwal semua kegiatan Posyandu.
 - **Artikel Kesehatan:** Media edukasi digital bagi masyarakat yang dapat dikelola oleh admin.
-- **Integrasi WhatsApp:** Terdapat tombol akses cepat ke grup WhatsApp dan pusat bantuan untuk mempermudah komunikasi.
+- **Integrasi WhatsApp:** Terdapat tombol akses cepat ke grup WhatsApp dan pusat bantuan.
 
 #### 4. Manajemen Inventaris
 - **Persediaan Vaksin:** Mengelola data stok vaksin, termasuk tanggal masuk dan kedaluwarsa.
@@ -40,20 +39,26 @@ Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyan
 - **Autentikasi:** Sistem registrasi dan login yang aman untuk pengguna.
 - **Identitas Situs:** Konfigurasi informasi dasar situs seperti nama desa dan kontak resmi.
 
+## Akun Demo
+Untuk mencoba aplikasi, gunakan akun berikut:
+
+- **Username:** admin
+- **Password:** admin123
+
 ## Teknologi yang Digunakan
 - **Backend:** Laravel (PHP)
 - **Database:** MySQL / MariaDB
 - **Frontend:** Node.js & Vite (opsional, untuk manajemen aset)
 
 ## Prasyarat
-- PHP 8.x dan Composer
-- MySQL / MariaDB
-- Node.js (opsional, direkomendasikan untuk pengembangan frontend)
+- PHP 8.x dan Composer  
+- MySQL / MariaDB  
+- Node.js (opsional, direkomendasikan untuk pengembangan frontend)  
 
 ## Instalasi (Lokal)
 ```bash
 # 1. Clone repositori ini
-git clone [https://github.com/finadio/PosyanduHarapanBunda.git](https://github.com/finadio/PosyanduHarapanBunda.git)
+git clone https://github.com/finadio/PosyanduHarapanBunda.git
 cd PosyanduHarapanBunda
 
 # 2. Salin file .env.example dan atur konfigurasi database
@@ -72,6 +77,10 @@ php artisan migrate --seed
 # 6. (Opsional) Install dependency frontend dan build aset
 npm install
 npm run build
+
+## Menjalankan Aplikasi (Local)
+php artisan serve
+
 
 ## Menjalankan Aplikasi (Local)
 ```bash
