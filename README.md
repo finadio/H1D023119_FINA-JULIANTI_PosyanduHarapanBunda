@@ -41,9 +41,12 @@ Aplikasi ini dilengkapi dengan berbagai fitur untuk mendukung operasional Posyan
 
 ## Akun Demo
 Untuk mencoba aplikasi, gunakan akun berikut:
-
+**Admin**
 - **Username:** admin
-- **Password:** admin123
+- **Password:** 123
+**User**
+- **Username:** 5658262510081726
+- **Password:** 123
 
 ## Teknologi yang Digunakan
 - **Backend:** Laravel (PHP)
